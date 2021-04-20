@@ -195,6 +195,17 @@ console.log(badDefense(fifaData));
 
 /* If you still have time, use the space below to work on any stretch goals of your chosing as listed in the README file. */
 
+function getTeamAppearances(data, teamInitials){
+  let finals = getFinals(data);
+  return finals.reduce((acc, game) => {
+    if (teamInitials === game["Home Team Initials"] || teamInitials === game["Away Team Initials"]){
+      return acc + 1;
+    } else {
+      return acc;
+    }
+  }, 0);
+}
+
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
 function foo(){
