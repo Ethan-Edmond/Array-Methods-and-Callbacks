@@ -57,13 +57,16 @@ function getWinners(array, getFinalsCb) {
   return finals.map(game => {
     if (game["Home Team Goals"] > game["Away Team Goals"]){
       return game["Home Team Name"];
-    } else {
+    } else if (game["Away Team Goals"] > game["Home Team Goals"]){
       return game["Away Team Name"];
+    } else {
+      return game["Win conditions"].split(" ")[0];
     }
   });
 }
 
 
+console.log("task 4 redux: ", getWinners(fifaData, getFinals));
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 Use the higher-order function getWinnersByYear to do the following:
@@ -85,6 +88,7 @@ function getWinnersByYear(array, getYearsCb, getWinnersCb) {
   return strings;
 }
 
+console.log(getWinnersByYear(fifaData, getYears, getWinners));
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher order function getAverageGoals to do the following: 
  1. Receive the callback function getFinals from task 2 ensure you pass in the data as an argument
@@ -206,6 +210,33 @@ function getTeamAppearances(data, teamInitials){
   }, 0);
 }
 
+function getTeamGoals(data, teamInitials){
+  let finals = getFinals(data);
+  return finals.reduce((acc, game) => {
+    if (teamInitials === game["Home Team Initials"]){
+      return acc + game["Home Team Goals"];
+    } else if (teamInitials === game["Away Team Initials"]){
+      return acc + game["Away Team Goals"];
+    } else {
+      return acc;
+    }
+  }, 0);
+}
+
+function countryHtml(data){
+  let countries = [];
+  for(let game of data) {
+    if (!countries.includes(game["Home Team Name"])){
+      countries.push(game["Home Team Name"]);
+    }
+    if (!countries.includes(game["Away Team Name"])){
+      countries.push(game["Away Team Name"]);
+    }
+  }
+  return countries.map((countryName) => {
+    return `<h1>${countryName}\n</h1>\n`;
+  });
+};
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
 function foo(){
